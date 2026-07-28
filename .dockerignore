@@ -1,0 +1,21 @@
+# ── Git ─────────────────────────────────────
+.git/
+.gitignore
+.gitattributes
+
+# ── IDEs ────────────────────────────────────
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# ── Node ────────────────────────────────────
+src/node_modules/
+src/.npm/
+
+# ── Docker ──────────────────────────────────
+docker-compose.override.yml
+
+# ── OS ──────────────────────────────────────
+.DS_Store
+Thumbs.db
