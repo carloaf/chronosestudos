@@ -11,9 +11,11 @@ use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TopicController;
 use Illuminate\Support\Facades\Route;
 
-// Visitante: landing page
+// Redireciona para login (guest) ou dashboard (auth)
 Route::get('/', function () {
-    return view('welcome');
+    return auth()->check()
+        ? redirect()->route('dashboard')
+        : redirect()->route('login');
 });
 
 // Dashboard (revisões do dia) — autenticado
