@@ -29,7 +29,7 @@ Preciso criar uma aplicação web chamada "ChronosEstudos", que será um cronogr
 - `resources` (Recursos de apoio): `id`, `topic_id`, `type` (youtube, wikipedia, link, etc), `url`, `title`, timestamps.
 - `study_schedules` (Agendamento de Revisões): `id`, `topic_id`, `last_studied_at`, `next_review_at`, `interval_days` (ex: 7, 15, 30), `status` (pendente, concluído), timestamps.
 
-### 4. O QUE PRECISO QUE VOCÊ FAÇA AGORA:
+### 4. JA FOI FEITO :
 Para iniciar vamos: 
 
 **Etapa 1:** Escreva os arquivos de configuração do ambiente Docker para este projeto:
@@ -38,3 +38,7 @@ Para iniciar vamos:
 3. Breve instrução de como inicializar o projeto Laravel dentro desse ambiente Docker.
 
 Aguarde minhas instruções após concluir a Etapa 1 para passarmos para as Migrations e Models do Laravel.
+
+### 5. O QUE PRECISO QUE VOCÊ FAÇA AGORA
+Melhorar o layout da pagina de login, pois esta com um design muito simples e pouco atrativo. Sugiro implementar um layout moderno, com cores agradáveis, tipografia legível e elementos visuais que transmitam organização e foco nos estudos (de acordo com o restante do projeto). Podemos utilizar Tailwind CSS para facilitar a estilização e garantir responsividade.
+

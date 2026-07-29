@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,22 +9,23 @@
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans text-gray-900 antialiased bg-gradient-to-br from-indigo-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
-            <div class="mb-4">
-                <a href="/" class="text-4xl">
-                    ⏳
-                </a>
-            </div>
+    <body class="font-sans antialiased min-h-screen flex flex-col items-center justify-center px-4 py-8" style="background: linear-gradient(135deg, #312e81 0%, #1e1b4b 50%, #172033 100%);">
 
-            <div class="w-full sm:max-w-md mt-6 px-6 py-8 bg-white dark:bg-gray-800 shadow-lg overflow-hidden sm:rounded-xl border border-gray-100 dark:border-gray-700">
-                {{ $slot }}
-            </div>
+        <!-- Card -->
+        <div class="animate-fade-in-up bg-white rounded-2xl" style="max-width: 400px; width: 100%; padding: 48px 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.35);">
+            {{ $slot }}
         </div>
+
+        <!-- Fixed Footer -->
+        <footer class="fixed bottom-0 left-0 w-full text-center pointer-events-none z-50 pb-4">
+            <span class="text-xs italic tracking-wide" style="color: rgba(255,255,255,0.40);">
+                &copy; {{ date('Y') }} ChronosEstudos &mdash; Cronograma com Repetição Espaçada
+            </span>
+        </footer>
     </body>
 </html>
