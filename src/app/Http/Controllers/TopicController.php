@@ -50,10 +50,30 @@ class TopicController extends Controller
             'notes' => $validated['notes'],
         ]);
 
-        // Atualizar StudySchedule se estiver preenchido
-        if (!empty($validated['study_starts_at'])) {
-            $topic->studySchedule?->update([
-                'study_starts_at' => $validated['study_starts_at'],
+        // Atualizar a data de início do estudo no agendamento (permite limpar o campo)
+        $schedule = $topic->studySchedule;
+        $newStartDate = $validated['study_starts_at'] ?? null;
+        $newStartDate = $newStartDate ?: null;
+
+        if ($schedule) {
+            $previousStartDate = $schedule->study_starts_at?->toDateString();
+
+            $schedule->study_starts_at = $newStartDate;
+
+            // Recalcula a próxima revisão quando a data de início muda e o tópico ainda não foi revisado.
+            if ($newStartDate && $newStartDate !== $previousStartDate && (int) $schedule->times_studied === 0) {
+                $schedule->next_review_at = now()->parse($newStartDate)->addDays(7)->toDateString();
+            }
+
+            $schedule->save();
+        } else {
+            $topic->studySchedule()->create([
+                'study_starts_at' => $newStartDate,
+                'next_review_at' => $newStartDate
+                    ? now()->parse($newStartDate)->addDays(7)->toDateString()
+                    : now()->addDays(7)->toDateString(),
+                'interval_days' => 7,
+                'status' => 'pending',
             ]);
         }
 

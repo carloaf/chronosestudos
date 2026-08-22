@@ -9,7 +9,7 @@ class TopicObserver
 {
     public function created(Topic $topic): void
     {
-        $startDate = request()->input('study_starts_at');
+        $startDate = request()->input('study_starts_at') ?: null;
         $nextReviewAt = $startDate ? now()->parse($startDate)->addDays(7) : now()->addDays(7);
 
         StudySchedule::create([

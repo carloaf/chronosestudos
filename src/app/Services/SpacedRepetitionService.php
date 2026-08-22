@@ -39,6 +39,7 @@ class SpacedRepetitionService
         return StudySchedule::query()
             ->where('next_review_at', '<=', now()->toDateString())
             ->where('status', 'pending')
+            ->whereNotNull('study_starts_at')
             ->whereHas('topic.subject', function ($query) use ($user) {
                 $query->where('user_id', $user->id);
             })
@@ -50,6 +51,7 @@ class SpacedRepetitionService
     public function getPending(User $user): Collection
     {
         return StudySchedule::query()
+            ->whereNotNull('study_starts_at')
             ->whereHas('topic.subject', function ($query) use ($user) {
                 $query->where('user_id', $user->id);
             })

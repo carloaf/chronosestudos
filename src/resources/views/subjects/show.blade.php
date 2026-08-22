@@ -83,6 +83,11 @@
                                     </a>
                                     <p class="text-xs text-slate-400 mt-1">
                                         Criado em {{ $topic->created_at->format('d/m/Y') }}
+                                        @if($topic->studySchedule?->study_starts_at)
+                                            · Início do estudo: {{ $topic->studySchedule->study_starts_at->format('d/m/Y') }}
+                                        @else
+                                            <span class="text-red-500 font-medium">· Falta colocar a Data de Início do Estudo</span>
+                                        @endif
                                         @if($topic->resources_count ?? false)
                                             · {{ $topic->resources_count }} recurso(s)
                                         @endif
@@ -202,6 +207,11 @@
                                "
                                class="w-full rounded-xl border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm px-4 py-2.5">
                         
+                        <p class="mt-2 flex items-start gap-1.5 text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
+                            <svg class="w-4 h-4 shrink-0 mt-px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5.071 19h13.858c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                            <span>O tópico somente será exibido no Dashboard quando a data de início do estudo for informada.</span>
+                        </p>
+
                         {{-- Smart date suggestions --}}
                         <template x-if="editTopic?.id && dateSuggestions && dateSuggestions[editTopic.id]">
                             <div class="mt-3 space-y-2">

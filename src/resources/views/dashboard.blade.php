@@ -146,6 +146,13 @@
                                         </button>
                                     </span>
 
+                                    {{-- Study start date --}}
+                                    <span class="text-xs text-slate-400 whitespace-nowrap">
+                                        @if($schedule->study_starts_at)
+                                            Início {{ \Carbon\Carbon::parse($schedule->study_starts_at)->format('d/m/Y') }}
+                                        @endif
+                                    </span>
+
                                     {{-- Last studied --}}
                                     <span class="text-xs text-slate-400 whitespace-nowrap">
                                         @if($schedule->last_studied_at)

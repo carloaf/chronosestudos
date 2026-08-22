@@ -31,29 +31,21 @@ class DashboardController extends Controller
 
         // Next upcoming review date (from all schedules, not just pending)
         $nextUpcoming = \App\Models\StudySchedule::query()
+            ->whereNotNull('study_starts_at')
             ->where('next_review_at', '>=', now()->toDateString())
             ->whereHas('topic.subject', fn($q) => $q->where('user_id', $user->id))
             ->orderBy('next_review_at')
             ->first();
 
-        // Calculate progress: topics reviewed vs total topics
-        $totalTopics = $user->subjects()
-            ->with('topics')
-            ->get()
-            ->flatMap(fn($subject) => $subject->topics)
-            ->count();
+        // Calculate progress based only on started topics (those with a study start date)
+        $totalTopics = $allSchedules->count();
 
-        $reviewedTopics = $user->subjects()
-            ->with(['topics.studySchedule'])
-            ->get()
-            ->flatMap(fn($subject) => $subject->topics)
-            ->filter(fn($topic) => $topic->studySchedule && $topic->studySchedule->last_studied_at !== null)
+        $reviewedTopics = $allSchedules
+            ->filter(fn($s) => $s->last_studied_at !== null)
             ->count();
 
         // Group schedules by times_studied for progress bars
-        $timesStudiedGroups = \App\Models\StudySchedule::query()
-            ->whereHas('topic.subject', fn($q) => $q->where('user_id', $user->id))
-            ->get()
+        $timesStudiedGroups = $allSchedules
             ->groupBy('times_studied')
             ->map(fn($schedules, $level) => [
                 'level' => (int) $level,
