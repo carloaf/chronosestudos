@@ -9,6 +9,7 @@ use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\StudyScheduleController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TopicController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use Illuminate\Support\Facades\Route;
 
 // Redireciona para login (guest) ou dashboard (auth)
@@ -65,5 +66,18 @@ Route::middleware('auth')->group(function () {
     Route::get('reports', [ReportController::class, 'index'])
         ->name('reports.index');
 });
+
+// Painel administrativo
+Route::middleware(['auth', 'admin'])
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function () {
+        Route::get('users', [AdminUserController::class, 'index'])->name('users.index');
+        Route::get('users/{user}', [AdminUserController::class, 'show'])->name('users.show');
+        Route::patch('users/{user}', [AdminUserController::class, 'update'])->name('users.update');
+        Route::patch('users/{user}/toggle-active', [AdminUserController::class, 'toggleActive'])->name('users.toggle-active');
+        Route::patch('users/{user}/toggle-admin', [AdminUserController::class, 'toggleAdmin'])->name('users.toggle-admin');
+        Route::delete('users/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
+    });
 
 require __DIR__.'/auth.php';

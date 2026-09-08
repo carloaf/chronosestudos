@@ -7,6 +7,7 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -76,6 +77,28 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_admin' => 'boolean',
+            'is_active' => 'boolean',
+            'payment_valid_until' => 'date',
         ];
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->is_admin || $this->isProtectedAdmin();
+    }
+
+    public function isProtectedAdmin(): bool
+    {
+        return in_array(
+            Str::lower((string) $this->email),
+            config('chronos.admin_emails', []),
+            true
+        );
+    }
+
+    public function isActive(): bool
+    {
+        return (bool) $this->is_active;
     }
 }

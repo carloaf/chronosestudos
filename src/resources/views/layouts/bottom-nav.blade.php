@@ -29,6 +29,15 @@
             <span class="text-[10px] font-medium">Relatório</span>
         </a>
 
+        @if (Auth::user()->isAdmin())
+            <a href="{{ route('admin.users.index') }}"
+               class="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl transition-colors
+                      {{ request()->routeIs('admin.*') ? 'text-indigo-600' : 'text-slate-400 hover:text-slate-600' }}">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-4a4 4 0 11-8 0 4 4 0 018 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                <span class="text-[10px] font-medium">Admin</span>
+            </a>
+        @endif
+
         <a href="{{ route('profile.edit') }}"
            class="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl transition-colors
                   {{ request()->routeIs('profile.*') ? 'text-indigo-600' : 'text-slate-400 hover:text-slate-600' }}">
